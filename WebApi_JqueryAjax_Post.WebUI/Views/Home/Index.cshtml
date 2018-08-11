@@ -1,0 +1,57 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <script src="~/Scripts/jquery-3.3.1.min.js"></script>
+    <title>Index</title>
+    <script type="text/javascript">
+        $(function () {
+            var $Ad = $('#Ad');
+            var $Soyad = $('#Soyad');
+            var $Yas = $('#Yas');
+
+            $("#btnisimekle").click(function () {
+                var insan = {
+                    Ad: $Ad.val(),
+                    Soyad: $Soyad.val(),
+                    Yas: $Yas.val(),
+                };
+                $.ajax({
+                    type: 'POST',
+                    url: 'http://localhost:25330/api/Veriler/PostInsan',
+                    data: insan,
+                    success: function () {
+                        var yeniisimsoyisim = insan.Ad + ' ' + insan.Soyad + ' yaş : ' + insan.Yas;
+                        $("#isimler").append("<li>" + yeniisimsoyisim + "</li>");
+                    }
+
+                });
+            });
+
+
+        });
+
+    </script>
+</head>
+<body>
+    <h1>İsimler</h1>
+
+    <div>
+        <ol id="isimler"></ol>
+    </div>
+
+    <div>
+        <p><input type="text" id="Ad" placeholder="isim giriniz" /></p>
+        <p><input type="text" id="Soyad" placeholder="soyisim giriniz" /></p>
+        <p><input type="text" id="Yas" placeholder="yaş giriniz" /></p>
+        <input type="button" id="btnisimekle" value="İsim ekle" />
+    </div>
+
+</body>
+</html>
