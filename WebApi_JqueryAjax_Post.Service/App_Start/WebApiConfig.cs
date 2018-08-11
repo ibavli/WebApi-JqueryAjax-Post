@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.Http;
+using System.Web.Http.Cors;
 
 namespace WebApi_JqueryAjax_Post.Service
 {
@@ -9,9 +10,9 @@ namespace WebApi_JqueryAjax_Post.Service
     {
         public static void Register(HttpConfiguration config)
         {
-            // Web API configuration and services
+            var corsAttr = new EnableCorsAttribute("http://localhost:25323", "*", "*");
+            config.EnableCors(corsAttr);
 
-            // Web API routes
             config.MapHttpAttributeRoutes();
 
             config.Routes.MapHttpRoute(
@@ -19,6 +20,9 @@ namespace WebApi_JqueryAjax_Post.Service
                 routeTemplate: "api/{controller}/{id}",
                 defaults: new { id = RouteParameter.Optional }
             );
+
+            config.Formatters.Remove(config.Formatters.XmlFormatter);
+
         }
     }
 }
